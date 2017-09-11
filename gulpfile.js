@@ -1,6 +1,7 @@
 "use strict";
 
 var gulp = require('gulp');
+var sourcemaps = require('gulp-sourcemaps');
 var jshint = require('gulp-jshint');
 var uglify = require('gulp-uglify');
 var sass = require('gulp-sass');
@@ -42,6 +43,7 @@ gulp.task('scripts', function () {
     }))
     .pipe(uglify())
     .pipe(rename({suffix: '.min'}))
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('./dest/scripts/'));
     // .pipe(browserSync.stream());
 });
@@ -49,7 +51,9 @@ gulp.task('scripts', function () {
 //compile sass
 gulp.task('sass', function () {
   return gulp.src('./styles/scss/main.scss')
+    .pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('./styles/css/'));
 });
 
